@@ -5,19 +5,17 @@ public class Personaje {
     private String clase;
     private String raza;
     private int vida;
-    private int vidaMax;
     private int nivel;
     private int exp;
     private int ataque;
     private int defensa;
     boolean [] cristales = new boolean [5];
     
-    public Personaje(String nombre, String clase, String raza, int vidaMax, int ataque, int defensa) {
+    public Personaje(String nombre, String clase, String raza, int vida, int ataque, int defensa) {
         this.nombre = nombre;
         this.clase = clase;
         this.raza = raza;
-        this.vida = vidaMax;
-        this.vidaMax = vidaMax;
+        this.vida = vida;
         this.nivel = 1;
         this.exp = 0;
         this.ataque = ataque;
@@ -57,14 +55,6 @@ public class Personaje {
 
     public void setVida(int vida) {
         this.vida = vida;
-    }
-
-    public int getVidaMax() {
-        return vidaMax;
-    }
-
-    public void setVidaMax(int vidaMax) {
-        this.vidaMax = vidaMax;
     }
 
     public int getNivel() {
