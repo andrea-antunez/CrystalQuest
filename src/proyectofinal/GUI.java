@@ -9,10 +9,12 @@ public class GUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUI.class.getName());
     
-    DefaultListModel<String> modelo = new DefaultListModel<>();
+    
+    
     
     public GUI() {
         initComponents();
+        txtCombate.setEditable(false);
         
         //Opciones de clase
         opcionesClase.removeAllItems();
@@ -42,8 +44,8 @@ public class GUI extends javax.swing.JFrame {
         
         //Opciones de personaje
         listaPersonajes.removeAll();
-        for (Personaje personaje : personajes){
-            modelo.addElement(personaje.getNombre());
+        for (Personaje temp : personajes){
+            modelo.addElement(temp.getNombre());
         }
         listaPersonajes.setModel(modelo);
     }
@@ -1050,7 +1052,8 @@ public class GUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    DefaultListModel<String> modelo = new DefaultListModel<>();
     public static Random azar = new Random();
     public static Personaje personaje;
     public static ArrayList <Personaje> personajes = new ArrayList();
@@ -1058,7 +1061,71 @@ public class GUI extends javax.swing.JFrame {
     public static ArrayList <Enemigo> jefes = new ArrayList();
     public static ArrayList <Objeto> objetos = new ArrayList();
     public static Objeto [][] inventario = new Objeto[3][5];
+    public static Combate combateActual;
     public static int nivel = 1;
+    public static int oro = 0;
+    
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new GUI().setVisible(true));
+        
+        //Personajes default
+        personajes.add(new Personaje("Mirael", "Pícaro", "Halfling", 29, 9, 3));
+        personajes.add(new Personaje("Borin", "Clérigo", "Enano", 31, 6, 5));
+        personajes.add(new Personaje("Aerin", "Maga", "Elfo", 30, 9, 1));
+        personajes.add(new Personaje("Lyra", "Druida", "Tiefling", 28, 9, 3));
+        personajes.add(new Personaje("Kael", "Paladín", "Humano", 34, 8, 5));
+        
+        //Enemigos comunes
+        enemigos.add(new Enemigo("Slime Cristalino", 20, 4, 1));
+        enemigos.add(new Enemigo("Ladrón Sombrío", 22, 6, 2));
+        enemigos.add(new Enemigo("Bestia del Cristal", 28, 7, 3));
+        enemigos.add(new Enemigo("Guardia Corrupto", 25, 6, 4));
+        enemigos.add(new Enemigo("Espíritu Fragmentado", 18, 8, 1));
+        
+        //Jefes
+        jefes.add(new Enemigo("Kaelthrix", 50, 9, 5));
+        jefes.add(new Enemigo("Sylvaen", 60, 8, 7));
+        jefes.add(new Enemigo("Nyxara", 48, 11, 4));
+        jefes.add(new Enemigo("Vorgrim", 65, 10, 6));
+        jefes.add(new Enemigo("Astrax", 75, 12, 7));
+        
+        //Objetos
+        objetos.add(new Objeto("Poción Menor", "Curación", 5));
+        objetos.add(new Objeto("Poción Media", "Curación", 10));
+        objetos.add(new Objeto("Poción Mayor", "Curación", 15));
+        objetos.add(new Objeto("Esencia Curativa", "Curación", 8));
+        objetos.add(new Objeto("Cristal Sanador", "Curación", 12));
+        objetos.add(new Objeto("Brebaje Antiguo", "Curación", 18));
+        objetos.add(new Objeto("Elixir Vital", "Curación", 20));
+        
+        objetos.add(new Objeto("Amuleto Agresivo", "Ataque", 1));
+        objetos.add(new Objeto("Pergamino de Fuerza", "Ataque", 2));
+        objetos.add(new Objeto("Runa de Poder", "Ataque", 3));
+        objetos.add(new Objeto("Cristal Cortante", "Ataque", 4));
+        
+        objetos.add(new Objeto("Amuleto Defensivo", "Defensa", 1));
+        objetos.add(new Objeto("Escudo de Cristal", "Defensa", 2));
+        objetos.add(new Objeto("Armadura Ligera", "Defensa", 3));
+        objetos.add(new Objeto("Talismán Antiguo", "Defensa", 4));
+    }
     
     private void btnCrearPersonajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPersonajeActionPerformed
         panel.removeAll();
@@ -1219,9 +1286,9 @@ public class GUI extends javax.swing.JFrame {
         txtVida.setEditable(true);
         txtAtaque.setEditable(true);
         txtDefensa.setEditable(true);
-        txtVida.setText("(20-45)");
-        txtAtaque.setText("(4-10)");
-        txtDefensa.setText("(1-6)");
+        txtVida.setText("(20-40)");
+        txtAtaque.setText("(4-8)");
+        txtDefensa.setText("(1-4)");
     }//GEN-LAST:event_btnManualActionPerformed
 
     private void btnAzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzarActionPerformed
@@ -1450,18 +1517,101 @@ public class GUI extends javax.swing.JFrame {
         panel.add(panelCombate);
         panel.repaint();
         panel.revalidate();
-        // INICIALIZAR COMBATE
+        Enemigo jefe = jefes.get(nivel);
+        combateActual = new Combate(personaje, jefe);
+        txtCombate.setText("¡Combate contra jefe del cristal!\n\n");
+        txtCombate.append(combateActual.estadoActual());
     }//GEN-LAST:event_btnIniciarMisionActionPerformed
-
+    
     private void btnEntrenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrenarActionPerformed
-        // JPOTIONPANE MESSAGE + SUBE ESTADISTICAS DE ATAQUE Y DEFENSA
+        String[] opciones = {"Ataque (+1)", "Defensa (+1)", "Cancelar"};
+        int eleccion = JOptionPane.showOptionDialog(this, "¿Qué desea entrenar?", "Entrenamiento", 0, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[2]);
+        switch (eleccion){
+            case 0:
+                if (personaje.getAtaque() < 20) {
+                    personaje.setAtaque(personaje.getAtaque() + 1);
+                    JOptionPane.showMessageDialog(this, "Tu ataque aumentó a " + personaje.getAtaque());
+                    JOptionPane.showMessageDialog(this, "¡Haz conseguido +15 EXP!");
+                    personaje.setExp(personaje.getExp() + 15);
+                    if (personaje.getExp() >= 100){
+                        personaje.setNivel(personaje.getNivel()+1);
+                        personaje.setExp(personaje.getExp() - 100);
+                        JOptionPane.showMessageDialog(this, "¡Haz subido de nivel!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Tu ataque ya está en el máximo permitido.");
+                }
+                break;
+            
+            case 1:
+                if (personaje.getDefensa() < 15) {
+                    personaje.setDefensa(personaje.getDefensa() + 1);
+                    JOptionPane.showMessageDialog(this, "Tu ataque aumentó a " + personaje.getDefensa());
+                    JOptionPane.showMessageDialog(this, "¡Haz conseguido +15 EXP!");
+                    personaje.setExp(personaje.getExp() + 15);
+                    if (personaje.getExp() >= 100){
+                        personaje.setNivel(personaje.getNivel()+1);
+                        personaje.setExp(personaje.getExp() - 100);
+                        JOptionPane.showMessageDialog(this, "¡Haz subido de nivel!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Tu ataque ya está en el máximo permitido.");
+                }
+                break;
+              
+            default:
+                break;
+        }
     }//GEN-LAST:event_btnEntrenarActionPerformed
 
     private void btnExplorarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExplorarActionPerformed
-        // JOPTIONPANE MESSAGE + GENERA AL AZAR LA OPORTUNIDAD DE CONSEGUIR DINERO/OBJETO
-        // GANA EXP Y PUEDE SUBIR DE NIVEL
+        int evento = azar.nextInt(101);
+        if (evento <= 25){
+            JOptionPane.showMessageDialog(this, "¡Un enemigo te atacó durante la exploración!\nPrepárate para el combate.", "Explorar", JOptionPane.WARNING_MESSAGE);
+            int num = azar.nextInt(enemigos.size());
+            Enemigo temp = enemigos.get(num);
+            combateActual = new Combate(personaje, temp);
+            panel.removeAll();
+            panel.add(panelCombate);
+            panel.repaint();
+            panel.revalidate();
+            txtCombate.setText("¡Un enemigo aparece!\n");
+            txtCombate.append(combateActual.estadoActual());
+        }
+        evento = azar.nextInt(101);
+        if (evento <= 25){
+            int num = azar.nextInt(objetos.size());
+            Objeto temp = objetos.get(num);
+            boolean agregado = agregarObjetoInventario(temp);
+            if (agregado) {
+                JOptionPane.showMessageDialog(this, "¡Encontraste un objeto!\nEs un/a " + temp.getNombre(), "Explorar", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Encontraste un objeto, pero tu mochila está llena.", "Explorar", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        else if (evento <= 50){
+            int num = azar.nextInt(16);
+            oro += num;
+            JOptionPane.showMessageDialog(this, "¡Encontraste "+num+" monedas de oro!");
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Exploraste la zona y ganaste experiencia.");
+        }
     }//GEN-LAST:event_btnExplorarActionPerformed
 
+    public boolean agregarObjetoInventario(Objeto objeto){
+        for (int i = 0; i < inventario.length; i++) {
+            for (int j = 0; j < inventario[i].length; j++) {
+                if (inventario[i][j] == null) {
+                    inventario[i][j] = objeto;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     private void btnVerTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTiendaActionPerformed
         panel.removeAll();
         panel.add(panelTienda);
@@ -1477,15 +1627,44 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVerInventarioActionPerformed
 
     private void btnVerEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEstadisticasActionPerformed
-        // JOPTIONPANE MESSAGE QUE DEMUESTRA LAS ESTADISTICAS
+        String info = 
+                "Nombre: " + personaje.getNombre() + "\n" +
+                "Raza: " + personaje.getRaza() + "\n" +
+                "Clase: " + personaje.getClase() + "\n" +
+                "Vida: " + personaje.getVida() + "\n" +
+                "Ataque: " + personaje.getAtaque() + "\n" +
+                "Defensa: " + personaje.getDefensa() +
+                "Dinero: "+oro;
     }//GEN-LAST:event_btnVerEstadisticasActionPerformed
 
+    private void finalizarCombate(){
+        btnAtacar.setEnabled(false);
+        btnDefender.setEnabled(false);
+        btnUsarObjeto.setEnabled(false);
+        panel.removeAll();
+        panel.add(panelMenuPrincipal);
+        panel.repaint();
+        panel.revalidate();
+    }
+    
     private void btnAtacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtacarActionPerformed
-        // PROGRAMAR PARA COMBATE
+        String resultado = combateActual.atacar();
+        txtCombate.append("\n" + resultado);
+        txtCombate.append("\n" + combateActual.estadoActual());
+
+        if (combateActual.isTerminado()) {
+            finalizarCombate();
+        }
     }//GEN-LAST:event_btnAtacarActionPerformed
 
     private void btnDefenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDefenderActionPerformed
-        // PROGRAMAR PARA COMBATE
+        String resultado = combateActual.defender();
+        txtCombate.append("\n" + resultado);
+        txtCombate.append("\n" + combateActual.estadoActual());
+
+        if (combateActual.isTerminado()) {
+            finalizarCombate();
+        }
     }//GEN-LAST:event_btnDefenderActionPerformed
 
     private void btnUsarObjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsarObjetoActionPerformed
@@ -1505,31 +1684,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarObjetoActionPerformed
 
     
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUI().setVisible(true));
-        personajes.add(new Personaje("Aerin", "Explorador", "Elfo", 32, 7, 5));
-        personajes.add(new Personaje("Thorgar", "Guerrero", "Enano", 36, 8, 6));
-        personajes.add(new Personaje("Lyra", "Brujo", "Tiefling", 28, 9, 3));
-        personajes.add(new Personaje("Kael", "Paladin", "Humano", 34, 8, 5));
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtacar;
