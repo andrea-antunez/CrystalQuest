@@ -20,7 +20,7 @@ public class ProyectoFinal {
     
     public static void main(String[] args) {
         //Personajes default
-        personajes.add(new Personaje("Lyra", "Druida", "Elfo", 25, 10, 3));
+        personajes.add(new Personaje("Lyra", "Druida", "Elfo", 32, 10, 3));
         personajes.add(new Personaje("Arin", "Guerrero", "Humano", 40, 8, 6));
         personajes.add(new Personaje("Dorn", "Ladrón", "Enano", 30, 7, 5));
         crear();
