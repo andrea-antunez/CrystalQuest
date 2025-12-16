@@ -5,9 +5,10 @@
         <group>
             <file>file:/C:/Users/Andrea/Documents/NetBeansProjects/ProyectoFinal/src/proyectofinal/ProyectoFinal.java</file>
             <file>file:/C:/Users/Andrea/Documents/NetBeansProjects/ProyectoFinal/src/proyectofinal/GUI.java</file>
-            <file>file:/C:/Users/Andrea/Documents/NetBeansProjects/ProyectoFinal/src/proyectofinal/Personaje.java</file>
             <file>file:/C:/Users/Andrea/Documents/NetBeansProjects/ProyectoFinal/src/proyectofinal/Objeto.java</file>
+            <file>file:/C:/Users/Andrea/Documents/NetBeansProjects/ProyectoFinal/src/proyectofinal/Personaje.java</file>
             <file>file:/C:/Users/Andrea/Documents/NetBeansProjects/ProyectoFinal/src/proyectofinal/Enemigo.java</file>
+            <file>file:/C:/Users/Andrea/Documents/NetBeansProjects/ProyectoFinal/src/proyectofinal/Combate.java</file>
         </group>
     </open-files>
 </project-private>

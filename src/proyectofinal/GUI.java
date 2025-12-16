@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class GUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUI.class.getName());
-    
-    
-    
     
     public GUI() {
         initComponents();
@@ -45,9 +43,20 @@ public class GUI extends javax.swing.JFrame {
         //Opciones de personaje
         listaPersonajes.removeAll();
         for (Personaje temp : personajes){
-            modelo.addElement(temp.getNombre());
+            lista1.addElement(temp.getNombre());
         }
-        listaPersonajes.setModel(modelo);
+        listaPersonajes.setModel(lista1);
+        
+        //Opciones de tienda
+        listaObjetos.removeAll();
+        for (Objeto temp : objetos){
+            lista2.addElement(temp.toString());
+        }
+        listaObjetos.setModel(lista2);
+        
+        //Inventario
+        tablaInventario.setModel(tabla);
+        tablaInventario.setRowHeight(40);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -929,21 +938,20 @@ public class GUI extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(27, 63, 72));
         jLabel8.setText("Inventario");
 
-        tablaInventario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tablaInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Objeto", "Objeto", "Objeto"},
-                {"Objeto", "Objeto", "O"},
-                {"O", "o", "o"},
-                {"o", "o", "o"},
-                {"o", "o", null}
+                {"", "", ""},
+                {"", "", ""},
+                {"", "", ""},
+                {"", "", ""},
+                {"", "", null}
             },
             new String [] {
                 "1", "2", "3"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -954,11 +962,6 @@ public class GUI extends javax.swing.JFrame {
         tablaInventario.setShowGrid(true);
         jScrollPane2.setViewportView(tablaInventario);
         tablaInventario.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (tablaInventario.getColumnModel().getColumnCount() > 0) {
-            tablaInventario.getColumnModel().getColumn(0).setHeaderValue("1");
-            tablaInventario.getColumnModel().getColumn(1).setHeaderValue("2");
-            tablaInventario.getColumnModel().getColumn(2).setHeaderValue("3");
-        }
 
         btnUsarObjeto2.setBackground(new java.awt.Color(27, 63, 72));
         btnUsarObjeto2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -1006,33 +1009,32 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(btnVolver3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelInventarioLayout.createSequentialGroup()
-                        .addGap(144, 144, 144)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInventarioLayout.createSequentialGroup()
-                .addGap(0, 49, Short.MAX_VALUE)
-                .addGroup(panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInventarioLayout.createSequentialGroup()
+                        .addGap(67, 67, 67)
                         .addComponent(btnUsarObjeto2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
-                        .addComponent(btnEliminarObjeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(73, 73, 73))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInventarioLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55))))
+                        .addComponent(btnEliminarObjeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelInventarioLayout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addGroup(panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelInventarioLayout.createSequentialGroup()
+                                .addGap(95, 95, 95)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         panelInventarioLayout.setVerticalGroup(
             panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInventarioLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
+                .addGap(42, 42, 42)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUsarObjeto2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminarObjeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
                 .addComponent(btnVolver3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -1053,7 +1055,9 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    DefaultListModel<String> modelo = new DefaultListModel<>();
+    DefaultListModel<String> lista1 = new DefaultListModel<>();
+    DefaultListModel<String> lista2 = new DefaultListModel<>();
+    DefaultTableModel tabla = new DefaultTableModel(3,5);
     public static Random azar = new Random();
     public static Personaje personaje;
     public static ArrayList <Personaje> personajes = new ArrayList();
@@ -1061,6 +1065,7 @@ public class GUI extends javax.swing.JFrame {
     public static ArrayList <Enemigo> jefes = new ArrayList();
     public static ArrayList <Objeto> objetos = new ArrayList();
     public static Objeto [][] inventario = new Objeto[3][5];
+    public static boolean cristales [] = {false, false, false, false, false};
     public static Combate combateActual;
     public static int nivel = 1;
     public static int oro = 0;
@@ -1094,37 +1099,37 @@ public class GUI extends javax.swing.JFrame {
         personajes.add(new Personaje("Kael", "Paladín", "Humano", 34, 8, 5));
         
         //Enemigos comunes
-        enemigos.add(new Enemigo("Slime Cristalino", 20, 4, 1));
-        enemigos.add(new Enemigo("Ladrón Sombrío", 22, 6, 2));
-        enemigos.add(new Enemigo("Bestia del Cristal", 28, 7, 3));
-        enemigos.add(new Enemigo("Guardia Corrupto", 25, 6, 4));
-        enemigos.add(new Enemigo("Espíritu Fragmentado", 18, 8, 1));
+        enemigos.add(new Enemigo("Slime Cristalino", 20, 4, 1, false));
+        enemigos.add(new Enemigo("Ladrón Sombrío", 22, 6, 2, false));
+        enemigos.add(new Enemigo("Bestia del Cristal", 28, 7, 3, false));
+        enemigos.add(new Enemigo("Guardia Corrupto", 25, 6, 4, false));
+        enemigos.add(new Enemigo("Espíritu Fragmentado", 18, 8, 1, false));
         
         //Jefes
-        jefes.add(new Enemigo("Kaelthrix", 50, 9, 5));
-        jefes.add(new Enemigo("Sylvaen", 60, 8, 7));
-        jefes.add(new Enemigo("Nyxara", 48, 11, 4));
-        jefes.add(new Enemigo("Vorgrim", 65, 10, 6));
-        jefes.add(new Enemigo("Astrax", 75, 12, 7));
+        jefes.add(new Enemigo("Kaelthar", 50, 9, 5, true));
+        jefes.add(new Enemigo("Sylvaen", 60, 8, 7, true));
+        jefes.add(new Enemigo("Nyxara", 48, 11, 4, true));
+        jefes.add(new Enemigo("Vorgrim", 65, 10, 6, true));
+        jefes.add(new Enemigo("Astrax", 70, 12, 7, true));
         
         //Objetos
-        objetos.add(new Objeto("Poción Menor", "Curación", 5));
-        objetos.add(new Objeto("Poción Media", "Curación", 10));
-        objetos.add(new Objeto("Poción Mayor", "Curación", 15));
-        objetos.add(new Objeto("Esencia Curativa", "Curación", 8));
-        objetos.add(new Objeto("Cristal Sanador", "Curación", 12));
-        objetos.add(new Objeto("Brebaje Antiguo", "Curación", 18));
-        objetos.add(new Objeto("Elixir Vital", "Curación", 20));
+        objetos.add(new Objeto("Poción Menor", "+VIDA", 5, 15));
+        objetos.add(new Objeto("Poción Media", "+VIDA", 10, 30));
+        objetos.add(new Objeto("Poción Mayor", "+VIDA", 15, 50));
+        objetos.add(new Objeto("Esencia Curativa", "+VIDA", 8, 25));
+        objetos.add(new Objeto("Cristal Sanador", "+VIDA", 12, 40));
+        objetos.add(new Objeto("Brebaje Antiguo", "+VIDA", 18, 70));
+        objetos.add(new Objeto("Elixir Vital", "+VIDA", 20, 90));
         
-        objetos.add(new Objeto("Amuleto Agresivo", "Ataque", 1));
-        objetos.add(new Objeto("Pergamino de Fuerza", "Ataque", 2));
-        objetos.add(new Objeto("Runa de Poder", "Ataque", 3));
-        objetos.add(new Objeto("Cristal Cortante", "Ataque", 4));
+        objetos.add(new Objeto("Amuleto Agresivo", "+ATQ", 1, 40));
+        objetos.add(new Objeto("Pergamino de Fuerza", "+ATQ", 2, 65));
+        objetos.add(new Objeto("Runa de Poder", "+ATQ", 3, 90));
+        objetos.add(new Objeto("Cristal Cortante", "+ATQ", 4, 120));
         
-        objetos.add(new Objeto("Amuleto Defensivo", "Defensa", 1));
-        objetos.add(new Objeto("Escudo de Cristal", "Defensa", 2));
-        objetos.add(new Objeto("Armadura Ligera", "Defensa", 3));
-        objetos.add(new Objeto("Talismán Antiguo", "Defensa", 4));
+        objetos.add(new Objeto("Amuleto Defensivo", "+DEF", 1, 35));
+        objetos.add(new Objeto("Escudo de Cristal", "+DEF", 2, 60));
+        objetos.add(new Objeto("Armadura Ligera", "+DEF", 3, 85));
+        objetos.add(new Objeto("Talismán Antiguo", "+DEF", 4, 115));
     }
     
     private void btnCrearPersonajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPersonajeActionPerformed
@@ -1142,10 +1147,18 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolver2ActionPerformed
 
     private void btnVolver3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolver3ActionPerformed
-        panel.removeAll();
-        panel.add(panelMenuPrincipal);
-        panel.repaint();
-        panel.revalidate();
+        if (objetoEnCombate){
+            panel.removeAll();
+            panel.add(panelCombate);
+            panel.repaint();
+            panel.revalidate();
+        }
+        else{
+            panel.removeAll();
+            panel.add(panelMenuPrincipal);
+            panel.repaint();
+            panel.revalidate();
+        }
     }//GEN-LAST:event_btnVolver3ActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
@@ -1525,19 +1538,14 @@ public class GUI extends javax.swing.JFrame {
     
     private void btnEntrenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrenarActionPerformed
         String[] opciones = {"Ataque (+1)", "Defensa (+1)", "Cancelar"};
-        int eleccion = JOptionPane.showOptionDialog(this, "¿Qué desea entrenar?", "Entrenamiento", 0, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[2]);
+        int eleccion = JOptionPane.showOptionDialog(this, "¿Qué desea entrenar?", "Entrenamiento", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[2]);
         switch (eleccion){
             case 0:
                 if (personaje.getAtaque() < 20) {
                     personaje.setAtaque(personaje.getAtaque() + 1);
-                    JOptionPane.showMessageDialog(this, "Tu ataque aumentó a " + personaje.getAtaque());
-                    JOptionPane.showMessageDialog(this, "¡Haz conseguido +15 EXP!");
+                    JOptionPane.showMessageDialog(this, "Tu ataque aumentó a " + personaje.getAtaque() + ".\n¡Has conseguido +15 EXP!");
                     personaje.setExp(personaje.getExp() + 15);
-                    if (personaje.getExp() >= 100){
-                        personaje.setNivel(personaje.getNivel()+1);
-                        personaje.setExp(personaje.getExp() - 100);
-                        JOptionPane.showMessageDialog(this, "¡Haz subido de nivel!");
-                    }
+                    subirNivel();
                 } else {
                     JOptionPane.showMessageDialog(this, "Tu ataque ya está en el máximo permitido.");
                 }
@@ -1546,16 +1554,15 @@ public class GUI extends javax.swing.JFrame {
             case 1:
                 if (personaje.getDefensa() < 15) {
                     personaje.setDefensa(personaje.getDefensa() + 1);
-                    JOptionPane.showMessageDialog(this, "Tu ataque aumentó a " + personaje.getDefensa());
-                    JOptionPane.showMessageDialog(this, "¡Haz conseguido +15 EXP!");
+                    JOptionPane.showMessageDialog(this, "Tu defensa aumentó a " + personaje.getDefensa()+".\n¡Has conseguido +15 EXP!");
                     personaje.setExp(personaje.getExp() + 15);
                     if (personaje.getExp() >= 100){
                         personaje.setNivel(personaje.getNivel()+1);
                         personaje.setExp(personaje.getExp() - 100);
-                        JOptionPane.showMessageDialog(this, "¡Haz subido de nivel!");
+                        JOptionPane.showMessageDialog(this, "¡Has subido de nivel!");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Tu ataque ya está en el máximo permitido.");
+                    JOptionPane.showMessageDialog(this, "Tu defensa ya está en el máximo permitido.");
                 }
                 break;
               
@@ -1563,14 +1570,26 @@ public class GUI extends javax.swing.JFrame {
                 break;
         }
     }//GEN-LAST:event_btnEntrenarActionPerformed
-
+    
+    private void subirNivel(){
+        if (personaje.getExp() >= 100) {
+            personaje.setNivel(personaje.getNivel() + 1);
+            personaje.setExp(personaje.getExp() - 100);
+            personaje.setAtaque(personaje.getAtaque() + 1);
+            personaje.setDefensa(personaje.getDefensa() + 1);
+            personaje.setVida(personaje.getVida() + 5);
+            JOptionPane.showMessageDialog(this, "¡Has subido de nivel!");
+        }
+    }
+    
     private void btnExplorarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExplorarActionPerformed
         int evento = azar.nextInt(101);
         if (evento <= 25){
             JOptionPane.showMessageDialog(this, "¡Un enemigo te atacó durante la exploración!\nPrepárate para el combate.", "Explorar", JOptionPane.WARNING_MESSAGE);
             int num = azar.nextInt(enemigos.size());
             Enemigo temp = enemigos.get(num);
-            combateActual = new Combate(personaje, temp);
+            Enemigo enemigo = new Enemigo (temp.getNombre(), temp.getVida(), temp.getAtaque(), temp.getDefensa(), temp.isJefe());
+            combateActual = new Combate(personaje, enemigo);
             panel.removeAll();
             panel.add(panelCombate);
             panel.repaint();
@@ -1578,25 +1597,26 @@ public class GUI extends javax.swing.JFrame {
             txtCombate.setText("¡Un enemigo aparece!\n");
             txtCombate.append(combateActual.estadoActual());
         }
-        evento = azar.nextInt(101);
-        if (evento <= 25){
+        else if (evento <= 50){
             int num = azar.nextInt(objetos.size());
             Objeto temp = objetos.get(num);
             boolean agregado = agregarObjetoInventario(temp);
             if (agregado) {
                 JOptionPane.showMessageDialog(this, "¡Encontraste un objeto!\nEs un/a " + temp.getNombre(), "Explorar", JOptionPane.INFORMATION_MESSAGE);
+                actualizarInventario();
             }
             else {
                 JOptionPane.showMessageDialog(this, "Encontraste un objeto, pero tu mochila está llena.", "Explorar", JOptionPane.WARNING_MESSAGE);
             }
         }
-        else if (evento <= 50){
-            int num = azar.nextInt(16);
+        else if (evento <= 75){
+            int num = azar.nextInt(1,16);
             oro += num;
             JOptionPane.showMessageDialog(this, "¡Encontraste "+num+" monedas de oro!");
         }
         else{
-            JOptionPane.showMessageDialog(this, "Exploraste la zona y ganaste experiencia.");
+            JOptionPane.showMessageDialog(this, "Exploraste la zona y ganaste +15 EXP.");
+            personaje.setExp(personaje.getExp() + 15);
         }
     }//GEN-LAST:event_btnExplorarActionPerformed
 
@@ -1624,6 +1644,7 @@ public class GUI extends javax.swing.JFrame {
         panel.add(panelInventario);
         panel.repaint();
         panel.revalidate();
+        actualizarInventario();
     }//GEN-LAST:event_btnVerInventarioActionPerformed
 
     private void btnVerEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEstadisticasActionPerformed
@@ -1631,20 +1652,45 @@ public class GUI extends javax.swing.JFrame {
                 "Nombre: " + personaje.getNombre() + "\n" +
                 "Raza: " + personaje.getRaza() + "\n" +
                 "Clase: " + personaje.getClase() + "\n" +
+                "Exp: " + personaje.getExp() + "\n" +
+                "Nivel: " + personaje.getNivel() + "\n" +
                 "Vida: " + personaje.getVida() + "\n" +
                 "Ataque: " + personaje.getAtaque() + "\n" +
-                "Defensa: " + personaje.getDefensa() +
-                "Dinero: "+oro;
+                "Defensa: " + personaje.getDefensa() + "\n" +
+                "Oro: " + oro + "\n" +
+                "Cristales: " + (nivel - 1);
+        JOptionPane.showMessageDialog(this, info);
     }//GEN-LAST:event_btnVerEstadisticasActionPerformed
 
-    private void finalizarCombate(){
-        btnAtacar.setEnabled(false);
-        btnDefender.setEnabled(false);
-        btnUsarObjeto.setEnabled(false);
+    private void finalizarCombate(Combate combateActual){
         panel.removeAll();
         panel.add(panelMenuPrincipal);
         panel.repaint();
         panel.revalidate();
+        if (combateActual.isGanado()){
+            if (combateActual.getEnemigo().isJefe()){
+                personaje.setExp(personaje.getExp() + 50);
+                int num = azar.nextInt(21);
+                oro += 30 + num;
+                JOptionPane.showMessageDialog(this, "¡Has ganado contra el jefe y conseguido un cristal!");
+                cristales[nivel-1] = true;
+                personaje.setCristales(cristales);
+                nivel++;
+                JOptionPane.showMessageDialog(this, "¡Has ganado exp y oro!");
+                subirNivel();
+            }
+            else{
+                personaje.setExp(personaje.getExp() + 25);
+                int num = azar.nextInt(16);
+                oro += 10 + num;
+                JOptionPane.showMessageDialog(this, "¡Has ganado exp y oro!");
+                subirNivel();
+            }
+        }
+        else if (combateActual.isPerdido()){
+            JOptionPane.showMessageDialog(this, "¡Has perdido, no pudo salvar Vitrallia!");
+            System.exit(0);
+        }
     }
     
     private void btnAtacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtacarActionPerformed
@@ -1653,7 +1699,8 @@ public class GUI extends javax.swing.JFrame {
         txtCombate.append("\n" + combateActual.estadoActual());
 
         if (combateActual.isTerminado()) {
-            finalizarCombate();
+            finalizarCombate(combateActual);
+            verificarVictoriaFinal();
         }
     }//GEN-LAST:event_btnAtacarActionPerformed
 
@@ -1663,29 +1710,155 @@ public class GUI extends javax.swing.JFrame {
         txtCombate.append("\n" + combateActual.estadoActual());
 
         if (combateActual.isTerminado()) {
-            finalizarCombate();
+            finalizarCombate(combateActual);
+            verificarVictoriaFinal();
         }
     }//GEN-LAST:event_btnDefenderActionPerformed
-
+    
+    public static boolean objetoEnCombate = false;
+    
     private void btnUsarObjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsarObjetoActionPerformed
-        // PROGRAMA PARA COMBATE
+        actualizarInventario();
+        panel.removeAll();
+        panel.add(panelInventario);
+        panel.repaint();
+        panel.revalidate();
+        objetoEnCombate = true;
     }//GEN-LAST:event_btnUsarObjetoActionPerformed
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
-        // ELIGE UN OBJETO DE LA LISTA Y LO COMPRA REALIZANDO VALIDACIONES
+        int num = listaObjetos.getSelectedIndex();
+        if (num == -1) {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un objeto para comprar.");
+            return;
+        }
+        Objeto tempObj = objetos.get(num);
+        Objeto objeto = new Objeto(tempObj.getNombre(), tempObj.getTipo(), tempObj.getEfecto(), tempObj.getPrecio());
+        if (oro < objeto.getPrecio()){
+            JOptionPane.showMessageDialog(this, "No tienes suficientes monedas de oro.");
+            return;
+        }
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Desea comprar el objeto?");
+        if (confirmar == JOptionPane.YES_OPTION) {
+            boolean agregado = agregarObjetoInventario(objeto);
+            if (agregado) {
+                oro -= objeto.getPrecio();
+                JOptionPane.showMessageDialog(this, "Has comprado un/a " + objeto.getNombre() + "\nOro restante: " + oro);
+            } else {
+                JOptionPane.showMessageDialog(this, "Tu inventario está lleno.");
+                return;
+            }
+        }
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void btnUsarObjeto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsarObjeto2ActionPerformed
-        // PROGRAMAR PARA USAR EL OBJETO ELEGIDO DE LA TABLA
+        int fila = tablaInventario.getSelectedRow();
+        int columna = tablaInventario.getSelectedColumn();
+        if (fila == -1 || columna == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un objeto primero.");
+            return;
+        }
+        Objeto objeto = inventario[fila][columna];
+        if (objeto == null) {
+            JOptionPane.showMessageDialog(this, "Ese espacio está vacío.");
+            return;
+        }
+        if (objetoEnCombate){
+            int confirmar = JOptionPane.showConfirmDialog(this, "¿Desea usar " + objeto.getNombre() + "?");
+            if (confirmar == JOptionPane.YES_OPTION) {
+                switch (objeto.getTipo()) {
+                    case "+VIDA":
+                        personaje.setVida(personaje.getVida() + objeto.getEfecto());
+                        txtCombate.append("Tu vida aumentó a" + personaje.getVida() + "\n");
+                        break;
+
+                    case "+ATQ":
+                        personaje.setAtaque(personaje.getAtaque() + objeto.getEfecto());
+                        txtCombate.append("Tu ataque aumentó a " + personaje.getAtaque() + "\n");
+                        break;
+
+                    case "+DEF":
+                        personaje.setDefensa(personaje.getDefensa() + objeto.getEfecto());
+                        txtCombate.append("Tu defensa aumentó a " + personaje.getDefensa() + "\n");
+                        break;
+                }
+                inventario[fila][columna] = null;
+                actualizarInventario();
+                panel.removeAll();
+                panel.add(panelCombate);
+                panel.repaint();
+                panel.revalidate();
+                objetoEnCombate = false;
+                txtCombate.append("Se ha utilizado: " + objeto.getNombre() + "\n");
+            }
+        }
+        else{
+            int confirmar = JOptionPane.showConfirmDialog(this, "¿Desea usar " + objeto.getNombre() + "?");
+            if (confirmar == JOptionPane.YES_OPTION) {
+                switch (objeto.getTipo()) {
+                    case "+VIDA":
+                        personaje.setVida(personaje.getVida() + objeto.getEfecto());
+                        JOptionPane.showMessageDialog(this, "Tu vida aumentó a" + personaje.getVida() + "\n");
+                        break;
+
+                    case "+ATQ":
+                        personaje.setAtaque(personaje.getAtaque() + objeto.getEfecto());
+                        JOptionPane.showMessageDialog(this, "Tu ataque aumentó a " + personaje.getAtaque() + "\n");
+                        break;
+
+                    case "+DEF":
+                        personaje.setDefensa(personaje.getDefensa() + objeto.getEfecto());
+                        JOptionPane.showMessageDialog(this, "Tu defensa aumentó a " + personaje.getDefensa() + "\n");
+                        break;
+                }
+                inventario[fila][columna] = null;
+                actualizarInventario();
+            }
+        }
     }//GEN-LAST:event_btnUsarObjeto2ActionPerformed
 
     private void btnEliminarObjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarObjetoActionPerformed
-        // PROGRAMAR PARA ELIMINAR EL OBJETO ELEGIDO DE LA TABLA
+        int fila = tablaInventario.getSelectedRow();
+        int columna = tablaInventario.getSelectedColumn();
+        if (fila == -1 || columna == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un objeto primero.");
+            return;
+        }
+        Objeto objeto = inventario[fila][columna];
+        if (objeto == null) {
+            JOptionPane.showMessageDialog(this, "Ese espacio ya está vacío.");
+            return;
+        }
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el objeto?");
+        if (confirmar == JOptionPane.YES_OPTION){
+            inventario[fila][columna] = null;
+            actualizarInventario();
+        }
     }//GEN-LAST:event_btnEliminarObjetoActionPerformed
 
+    private void actualizarInventario(){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (inventario[i][j] != null) {
+                    Objeto objeto = inventario[i][j];
+                    tabla.setValueAt(objeto.getNombre(), i, j);
+                } else {
+                    tabla.setValueAt("", i, j);
+                }
+            }
+        }
+    }
     
+    private void verificarVictoriaFinal() {
+        for (boolean cristal : cristales) {
+            if (cristal == false) {
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(this, "¡HAS REUNIDO LOS CINCO CRISTALES!\n\n" + "El reino de Vitrallia ha sido salvado.\n" + "Las fuerzas enemigas han sido derrotadas.\n\n"+ "🏆 ¡Felicidades héroe! 🏆");
+        System.exit(0);
+    }
     
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtacar;
     private javax.swing.JButton btnAzar;

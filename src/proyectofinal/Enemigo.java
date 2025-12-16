@@ -5,12 +5,14 @@ public class Enemigo {
     private int vida;
     private int ataque;
     private int defensa;
+    private boolean jefe;
 
-    public Enemigo(String nombre, int vida, int ataque, int defensa) {
+    public Enemigo(String nombre, int vida, int ataque, int defensa, boolean jefe) {
         this.nombre = nombre;
         this.vida = vida;
         this.ataque = ataque;
         this.defensa = defensa;
+        this.jefe = jefe;
     }
 
     public String getNombre() {
@@ -44,6 +46,12 @@ public class Enemigo {
     public void setDefensa(int defensa) {
         this.defensa = defensa;
     }
-    
-    
+
+    public boolean isJefe() {
+        return jefe;
+    }
+
+    public void setJefe(boolean jefe) {
+        this.jefe = jefe;
+    }
 }
