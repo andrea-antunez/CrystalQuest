@@ -1289,7 +1289,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_opcionesClaseActionPerformed
 
     private void opcionesRazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionesRazaActionPerformed
-        // PROGRAMAR LAS OPCIONES RAZA
+        
     }//GEN-LAST:event_opcionesRazaActionPerformed
 
     private void btnManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManualActionPerformed
@@ -1689,6 +1689,7 @@ public class GUI extends javax.swing.JFrame {
         }
         else if (combateActual.isPerdido()){
             JOptionPane.showMessageDialog(this, "¡Has perdido, no pudo salvar Vitrallia!");
+            System.out.println("¡Derrota!");
             System.exit(0);
         }
     }
@@ -1769,7 +1770,7 @@ public class GUI extends javax.swing.JFrame {
                 switch (objeto.getTipo()) {
                     case "+VIDA":
                         personaje.setVida(personaje.getVida() + objeto.getEfecto());
-                        txtCombate.append("Tu vida aumentó a" + personaje.getVida() + "\n");
+                        txtCombate.append("Tu vida aumentó a " + personaje.getVida() + "\n");
                         break;
 
                     case "+ATQ":
@@ -1856,6 +1857,7 @@ public class GUI extends javax.swing.JFrame {
             }
         }
         JOptionPane.showMessageDialog(this, "¡HAS REUNIDO LOS CINCO CRISTALES!\n\n" + "El reino de Vitrallia ha sido salvado.\n" + "Las fuerzas enemigas han sido derrotadas.\n\n"+ "🏆 ¡Felicidades héroe! 🏆");
+        System.out.println("¡Victoria!");
         System.exit(0);
     }
     
